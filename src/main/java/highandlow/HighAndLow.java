@@ -14,6 +14,7 @@ class HighAndLow{
         // スタート文言の表示
         System.out.println("High and Low ゲームをはじめます。");
         // 基準値の生成
+        // finalつけたい
         int first = makeRandomNumber();
         // ユーザの入力
         System.out.println(first + "! 次の値は High? Low?");
@@ -32,6 +33,7 @@ class HighAndLow{
      * 最小値：1 最大値：10
      * @return int 乱数
      */
+    // privateでいいような
     protected static int makeRandomNumber(){
         return (int)(Math.random() * 10 + 1);
     }
@@ -48,6 +50,7 @@ class HighAndLow{
         System.out.println(choices);
 
         String userAnswer = "";
+        // try-with-resourcesいいね( ๑°ω°๑)و ｸﾞｯ!
         try(InputStreamReader is = new InputStreamReader(System.in);
             BufferedReader br = new BufferedReader(is)) {
 
@@ -82,6 +85,8 @@ class HighAndLow{
         }
 
         //数値型チェック
+        // pattern、キャッシュしたほうがいいかも
+        // キャッシュしないならString#matches使ったほうが読みやすい
         Pattern pattern = Pattern.compile("^[0-9]*$");
         Matcher matcher = pattern.matcher(targetChoice);
         if (!matcher.find()) {
@@ -89,6 +94,7 @@ class HighAndLow{
         }
 
         //今回はHigh and Low なので2択
+        // いっそ^[12]$でいいんじゃ...
         int selectNumber = Integer.parseInt(targetChoice);
         if (!(selectNumber == 1 || selectNumber == 2)){
             return false;
@@ -104,6 +110,7 @@ class HighAndLow{
      * @param userAnswer ユーザが入力した答え(1:High 2:Low)
      * @return int 判定結果(1:正解 2:はずれ 3:引き分け）
      */
+    // 戻り値、enum使ってもよさそう
     protected static int compareNumber(int first, int second, int userAnswer){
         //Highが正解か？！Lowが正解か？！
         int answer = 0;
@@ -113,6 +120,8 @@ class HighAndLow{
             answer = 2;
         }
 
+        // switch使ったほうが楽じゃない？
+        // ロジックとUIがごっちゃになってる＞＜
         if (answer == 0) {
             //1つ目の値と2つ目の値が等しい場合は勝負引き分け
             System.out.println("引き分け！");
