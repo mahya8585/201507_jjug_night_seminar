@@ -7,7 +7,7 @@ import java.util.List;
  * 水の移動手順と現在のステータスを保持するオブジェクト
  * Created by maaya_ishida on 2015/07/11.
  */
-public class Status {
+public class Status implements Cloneable {
 
     // このステータスにたどり着くまでの手順
     private List<Status> history;
@@ -20,6 +20,21 @@ public class Status {
         history = new ArrayList<>();
     }
 
+    @Override
+    protected Status clone() {
+        Status result = null;
+
+        try{
+
+            result = (Status)super.clone();
+
+        } catch (CloneNotSupportedException ce) {
+            System.out.println("ステータスのクローンに失敗しました。");
+            ce.printStackTrace();
+        }
+
+        return result;
+    }
 
     /** getter/setter */
     public void setSmallBucketAmount(int smallBucketAmount) {
@@ -46,8 +61,6 @@ public class Status {
         this.actionName = actionName;
     }
 
-
-    /**setter/getter*/
     public List<Status> getHistory() {
         return history;
     }

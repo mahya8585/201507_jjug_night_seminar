@@ -15,11 +15,11 @@ import static buckets.CreateDisplayWords.writeStart;
  */
 public class MeasurementGame {
     //小さいバケツ
-    private static Bucket smallBucket;
+    static Bucket smallBucket;
     //大きいバケツ
-    private static Bucket largeBucket;
+    static Bucket largeBucket;
     //検索Queue
-    private static Queue<Status> queue;
+    static Queue<Status> queue = new LinkedList<>();
     //やったことある組み合わせ覚書
     static boolean[][] judgmentMap = new boolean[SMALL_BUCKET_CAPACITY][LARGE_BUCKET_CAPACITY];
 
@@ -37,7 +37,7 @@ public class MeasurementGame {
         //幅優先探索
         Status answer = null;
         while (!queue.isEmpty()) {
-            answer = find();
+            answer = find(queue.poll());
         }
 
         //手順の書き出し（history)
@@ -54,19 +54,19 @@ public class MeasurementGame {
         largeBucket = new Bucket(LARGE_BUCKET_CAPACITY);
 
         //スタートステータスを設定する
-        queue = new LinkedList<>();
-        queue.offer(makeStatus(0,0,null));
+        queue.offer(makeStatus(0, 0, null, new Status()));
     }
 
     /**
      * 幅探索処理
+     * @param queueStatus pollしたqueueの情報(status情報)
      * @return 正解時のステータス
      */
-    static Status find() {
+    static Status find(Status queueStatus) {
         Status actionResult;
         for (BucketActions bucketAction : BucketActions.values()) {
             //検索用ステータスを作成
-            actionResult = executeBucketAction(bucketAction, smallBucket.getAmount(), largeBucket.getAmount());
+            actionResult = executeBucketAction(bucketAction, queueStatus.clone());
             int sBucketAmount = actionResult.getSmallBucketAmount();
             int lBucketAmount = actionResult.getLargeBucketAmount();
 
@@ -77,9 +77,9 @@ public class MeasurementGame {
             }
 
             //過去に判定したことある数値の組み合わせだった場合はそれ以上の計算を行わない(Queueに入れない)
-            if (!judgmentMap[sBucketAmount][lBucketAmount]) {
-                judgmentMap[sBucketAmount][lBucketAmount] = true;
-                queue.offer(makeStatus(sBucketAmount, lBucketAmount, bucketAction));
+            if (!judgmentMap[sBucketAmount - 1][lBucketAmount - 1]) {
+                judgmentMap[sBucketAmount - 1][lBucketAmount - 1] = true;
+                queue.offer(makeStatus(sBucketAmount, lBucketAmount, bucketAction, actionResult));
             }
 
             //TODO 本来であれば考えうる組み合わせ全ての網羅が完了してしまっているか(答えの出せない組み合わせであるか）
@@ -92,12 +92,12 @@ public class MeasurementGame {
     /**
      * バケツ作業を実行しその結果を返却する
      */
-    static Status executeBucketAction (BucketActions selectAction, int smallBucketAmount, int largeBucketAmount) {
+    static Status executeBucketAction (BucketActions selectAction, Status queueStatus) {
         //検査用バケツの設定
         Bucket sBucket = new Bucket(SMALL_BUCKET_CAPACITY);
-        sBucket.setAmount(smallBucketAmount);
+        sBucket.setAmount(queueStatus.getSmallBucketAmount());
         Bucket lBucket = new Bucket(LARGE_BUCKET_CAPACITY);
-        lBucket.setAmount(largeBucketAmount);
+        lBucket.setAmount(queueStatus.getLargeBucketAmount());
 
         // 指定動作の実行
         switch (selectAction) {
@@ -132,14 +132,10 @@ public class MeasurementGame {
                     lBucket.getAmount() + addAmountToLargeBucket
                 );
                 break;
-
-            default:
-                System.out.println("バケツの行動に予期せぬ行動が設定されました。selectAction = [" + selectAction + "]");
-                break;
         }
 
         //返却stateの作成
-        return makeStatus(sBucket.getAmount(), lBucket.getAmount(), selectAction);
+        return makeStatus(sBucket.getAmount(), lBucket.getAmount(), selectAction, queueStatus);
     }
 
     /**
@@ -147,16 +143,16 @@ public class MeasurementGame {
      * @param smallBucketAmount 小さいバケツに現在入っている量
      * @param largeBucketAmount 大きいバケツに現在入っている量
      * @param actionName 行動名
+     * @param sourceStatus 上記パラメータを追加する元になるステータスオブジェクト
      * @return パラムを登録したステータス情報
      */
-    static Status makeStatus(int smallBucketAmount, int largeBucketAmount, BucketActions actionName) {
-        Status resultStatus = new Status();
-        resultStatus.setSmallBucketAmount(smallBucketAmount);
-        resultStatus.setLargeBucketAmount(largeBucketAmount);
-        resultStatus.setActionName(actionName);
+    static Status makeStatus(int smallBucketAmount, int largeBucketAmount, BucketActions actionName, Status sourceStatus) {
+        sourceStatus.setSmallBucketAmount(smallBucketAmount);
+        sourceStatus.setLargeBucketAmount(largeBucketAmount);
+        sourceStatus.setActionName(actionName);
 
-        resultStatus.addHistory(resultStatus);
+        sourceStatus.addHistory(sourceStatus);
 
-        return resultStatus;
+        return sourceStatus;
     }
 }

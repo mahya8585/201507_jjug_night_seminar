@@ -55,13 +55,13 @@ public class CreateDisplayWords {
                         break;
 
                     case SMALL_FULLIn:
-                        processText.append(LARGE_BUCKET_CAPACITY).append("L のバケツを満たす");
+                        processText.append(SMALL_BUCKET_CAPACITY).append("L のバケツを満たす");
                         break;
 
                     case SMALL_MOVE:
-                        processText.append(LARGE_BUCKET_CAPACITY)
+                        processText.append(SMALL_BUCKET_CAPACITY)
                                 .append("L のバケツから")
-                                .append(SMALL_BUCKET_CAPACITY)
+                                .append(LARGE_BUCKET_CAPACITY)
                                 .append("L のバケツへ移動する");
                         break;
                 }
