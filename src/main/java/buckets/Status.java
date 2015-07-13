@@ -14,7 +14,7 @@ public class Status {
 
     private int smallBucketAmount;
     private int largeBucketAmount;
-    private SearchAnswer.BucketActions actionName;
+    private Const.BucketActions actionName;
 
     Status() {
         history = new ArrayList<>();
@@ -38,11 +38,11 @@ public class Status {
         return largeBucketAmount;
     }
 
-    public SearchAnswer.BucketActions getActionName() {
+    public Const.BucketActions getActionName() {
         return actionName;
     }
 
-    public void setActionName(SearchAnswer.BucketActions actionName) {
+    public void setActionName(Const.BucketActions actionName) {
         this.actionName = actionName;
     }
 

@@ -29,7 +29,6 @@ public class Bucket {
 
     /**
      * バケツの中身を全て捨てる
-     * @return
      */
     public void empty() {
         amount = 0;
