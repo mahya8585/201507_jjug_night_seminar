@@ -17,7 +17,7 @@ import static org.hamcrest.CoreMatchers.is;
 */
 @RunWith(Enclosed.class)
 
-class HighAndLowTest{
+public class HighAndLowTest{
     private HighAndLow highAndLow;
     private ExtendInputStream inputStream = new ExtendInputStream();
 

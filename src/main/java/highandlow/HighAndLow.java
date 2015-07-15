@@ -90,6 +90,7 @@ class HighAndLow{
 
         //今回はHigh and Low なので2択
         int selectNumber = Integer.parseInt(targetChoice);
+
         if (!(selectNumber == 1 || selectNumber == 2)){
             return false;
         }
