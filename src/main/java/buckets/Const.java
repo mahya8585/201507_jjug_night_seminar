@@ -16,7 +16,7 @@ public class Const {
 
     //組み合わせ作成用の代替変数
     public static enum BucketActions {
-        SMALL_FULLIn,
+        SMALL_FULLIN,
         SMALL_EMPTY,
         SMALL_MOVE,
         LARGE_FULLIN,

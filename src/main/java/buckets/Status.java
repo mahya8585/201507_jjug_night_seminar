@@ -2,6 +2,7 @@ package buckets;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 水の移動手順と現在のステータスを保持するオブジェクト
@@ -14,7 +15,7 @@ public class Status implements Cloneable {
 
     private int smallBucketAmount;
     private int largeBucketAmount;
-    private Const.BucketActions actionName;
+    private String processText;
 
     Status() {
         history = new ArrayList<>();
@@ -26,7 +27,10 @@ public class Status implements Cloneable {
 
         try{
 
+            /* historyリストをclone前に保持しておき、clone実施後historyに戻す(deep copy) */
+            List<Status> historyList = history.stream().collect(Collectors.toList());
             result = (Status)super.clone();
+            result.setHistory(historyList);
 
         } catch (CloneNotSupportedException ce) {
             System.out.println("ステータスのクローンに失敗しました。");
@@ -53,20 +57,20 @@ public class Status implements Cloneable {
         return largeBucketAmount;
     }
 
-    public Const.BucketActions getActionName() {
-        return actionName;
+    public String getProcessText() {
+        return processText;
     }
 
-    public void setActionName(Const.BucketActions actionName) {
-        this.actionName = actionName;
+    public void setProcessText(String processText) {
+        this.processText = processText;
     }
 
     public List<Status> getHistory() {
         return history;
     }
 
-    public void addHistory(Status status) {
-        this.history.add(status);
+    public void setHistory(List<Status> history) {
+        this.history = history;
     }
 
 }
