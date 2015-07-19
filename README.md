@@ -12,4 +12,8 @@
 回答ソース作成のためのブランチはanswerブランチから作成するようにします。
 
 
-**現在のブランチはanswerです**
+**現在のブランチはmasterです**
+
+#### java実行コマンド例
+
+java -classpath target/201507_jjug-1.0.jar highandlow.HighAndLow
