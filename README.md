@@ -11,9 +11,5 @@
 登壇時最終的なソースコードとして表示させたい「回答コード」
 回答ソース作成のためのブランチはanswerブランチから作成するようにします。
 
-**現在のブランチはmasterです。**
 
-
-#### jar 実行コマンド例
-
-java -classpath target/201507_jjug-1.0.jar highandlow.HighAndLow
+**現在のブランチはanswerです**
