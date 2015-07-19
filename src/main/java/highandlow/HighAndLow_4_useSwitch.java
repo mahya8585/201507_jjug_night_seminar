@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * High and Low ゲームクラス
  */
-class HighAndLow {
+class HighAndLow_4_useSwitch {
     public static void main(String[] args) {
         // スタート文言の表示
         System.out.println("High and Low ゲームをはじめます。");
