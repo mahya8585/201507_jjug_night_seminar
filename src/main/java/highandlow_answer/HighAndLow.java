@@ -1,4 +1,4 @@
-package highandlow;
+package highandlow_answer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * High and Low ゲームクラス
  */
-class HighAndLow_2_tryWithResources {
+class HighAndLow {
     public static void main(String[] args) {
         // スタート文言の表示
         System.out.println("High and Low ゲームをはじめます。");
@@ -22,7 +22,7 @@ class HighAndLow_2_tryWithResources {
         int second = makeRandomNumber();
         System.out.println(second + "がでました！");
         // 結果判定
-        compareNumber(first, second, userAnswer);
+        showResult(first, second, userAnswer);
         System.out.println("ゲームを終わります。");
     }
 
@@ -82,19 +82,10 @@ class HighAndLow_2_tryWithResources {
             return false;
         }
 
-        //TODO ２つまとめて1つのエラーチェックにする
         //数値型チェック
-        Pattern pattern = Pattern.compile("^[0-9]*$");
+        Pattern pattern = Pattern.compile("^[12]$");
         Matcher matcher = pattern.matcher(targetChoice);
         if (!matcher.find()) {
-            return false;
-        }
-
-        //今回はHigh and Low なので2択
-        int selectNumber = Integer.parseInt(targetChoice);
-
-        //TODO simpllyfyを紹介する
-        if (!(selectNumber == 1 || selectNumber == 2)){
             return false;
         }
 
@@ -108,27 +99,34 @@ class HighAndLow_2_tryWithResources {
      * @param userAnswer ユーザが入力した答え(1:High 2:Low)
      * @return int 判定結果(1:正解 2:はずれ 3:引き分け）
      */
-    static int compareNumber(int first, int second, int userAnswer){
-        //Highが正解か？！Lowが正解か？！
-        int answer = 0;
-        if (first < second) {
-            answer = 1;
-        } else if (first > second){
-            answer = 2;
-        }
+    static void showResult(int first, int second, int userAnswer){
+        System.out.println(second + "がでました！");
+        final Result result = go(first, second, userAnswer);
+        System.out.println(getResultMessage(result));
+    }
 
-        //TODO switchにする
-        if (answer == 0) {
-            //1つ目の値と2つ目の値が等しい場合は勝負引き分け
-            System.out.println("引き分け！");
-            return 3;
-        } else if (answer == userAnswer){
-            System.out.println("あたり！ﾜ━ヽ(*´Д｀*)ﾉ━ｨ!!!");
-            return 1;
-        } else {
-            System.out.println("はずれ！(´・ω・｀)");
-            return 2;
+    static Result go(int first, int second, int userAnswer) {
+        final int got = Integer.compare(first, second);
+        if (got == 0) return Result.DRAW;
+        if (got < 0 && userAnswer == 1) return Result.WIN;
+        if (got > 0 && userAnswer == 2) return Result.WIN;
+        return Result.LOSE;
+    }
+
+    static String getResultMessage(final Result result) {
+        switch (result) {
+            case WIN:
+                return "あたり！ﾜ━ヽ(*´Д｀*)ﾉ━ｨ!!!";
+            case LOSE:
+                return "はずれ！(´・ω・｀)";
+            case DRAW:
+                return "引き分け！";
         }
+        throw new IllegalArgumentException();
+    }
+
+    enum Result {
+        WIN, LOSE, DRAW
     }
 }
 

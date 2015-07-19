@@ -1,4 +1,4 @@
-package highandlow;
+package highandlow_answer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * High and Low ゲームクラス
  */
-class HighAndLow_3_margeErrorChack {
+class HighAndLow_2_tryWithResources {
     public static void main(String[] args) {
         // スタート文言の表示
         System.out.println("High and Low ゲームをはじめます。");
@@ -82,10 +82,19 @@ class HighAndLow_3_margeErrorChack {
             return false;
         }
 
+        //TODO ２つまとめて1つのエラーチェックにする
         //数値型チェック
-        Pattern pattern = Pattern.compile("^[12]$");
+        Pattern pattern = Pattern.compile("^[0-9]*$");
         Matcher matcher = pattern.matcher(targetChoice);
         if (!matcher.find()) {
+            return false;
+        }
+
+        //今回はHigh and Low なので2択
+        int selectNumber = Integer.parseInt(targetChoice);
+
+        //TODO simpllyfyを紹介する
+        if (!(selectNumber == 1 || selectNumber == 2)){
             return false;
         }
 
