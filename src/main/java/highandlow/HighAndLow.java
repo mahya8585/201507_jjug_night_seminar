@@ -48,8 +48,12 @@ class HighAndLow{
         System.out.println(choices);
 
         String userAnswer = "";
-        try(InputStreamReader is = new InputStreamReader(System.in);
-            BufferedReader br = new BufferedReader(is)) {
+
+        InputStreamReader is = null;
+        BufferedReader br = null;
+        try {
+            is = new InputStreamReader(System.in);
+            br = new BufferedReader(is);
 
             // ユーザの入力を待ちます
             userAnswer = br.readLine();
@@ -63,6 +67,14 @@ class HighAndLow{
 
         } catch (IOException ioe) {
             System.out.println("入力値に誤りがあります。ゲームを始めからやりなおしてください。 入力値：" + userAnswer);
+
+        } finally {
+            try {
+                is.close();
+                br.close();
+            } catch (IOException ioe) {
+                System.out.println("クローズ処理に失敗しました。");
+            }
         }
 
         return Integer.parseInt(userAnswer);
