@@ -9,7 +9,10 @@ import java.util.regex.Pattern;
 /**
  * High and Low ゲームクラス
  */
-class HighAndLow4UseSwitch {
+class HighAndLow4ErrorMargeAndPatternCash {
+    // 入力チェックパターン
+    private static final Pattern pattern = Pattern.compile("^[12]$");
+
     public static void main(String[] args) {
         // スタート文言の表示
         System.out.println("High and Low ゲームをはじめます。");
@@ -22,7 +25,7 @@ class HighAndLow4UseSwitch {
         int second = makeRandomNumber();
         System.out.println(second + "がでました！");
         // 結果判定
-        showResult(first, second, userAnswer);
+        compareNumber(first, second, userAnswer);
         System.out.println("ゲームを終わります。");
     }
 
@@ -33,17 +36,20 @@ class HighAndLow4UseSwitch {
      * @return int 乱数
      */
     static int makeRandomNumber(){
+
         return (int)(Math.random() * 10 + 1);
     }
+
 
     /**
      * ユーザの答えの入力を制御します。
      * 1: High
      * 2: Low
      * 入力チェックも合わせて実施します。
+     *
      * @return
      */
-    static int inputUserAnswer(){
+    static int inputUserAnswer() {
         String choices = "1: High   2: Low";
         System.out.println(choices);
 
@@ -73,6 +79,7 @@ class HighAndLow4UseSwitch {
      * 選択肢の入力チェックを行います。
      * - 数値型であること
      * - 1か2の値であること（1:High 2:Low)
+     *
      * @param targetChoice 入力チェック対象
      * @return
      */
@@ -82,8 +89,7 @@ class HighAndLow4UseSwitch {
             return false;
         }
 
-        //数値型チェック
-        Pattern pattern = Pattern.compile("^[12]$");
+        //数値型チェック(パターンはクラス変数にあります）
         Matcher matcher = pattern.matcher(targetChoice);
         if (!matcher.find()) {
             return false;
@@ -94,39 +100,27 @@ class HighAndLow4UseSwitch {
 
     /**
      * ユーザの選択肢の正誤を確認します
-     * @param first 基準値
-     * @param second 勝負値
-     * @param userAnswer ユーザが入力した答え(1:High 2:Low)
+     *
+     * @param a      基準値
+     * @param b     勝負値
+     * @param c ユーザが入力した答え(1:High 2:Low)
      * @return int 判定結果(1:正解 2:はずれ 3:引き分け）
      */
-    static void showResult(int first, int second, int userAnswer){
-        System.out.println(second + "がでました！");
-        final Result result = go(first, second, userAnswer);
-        System.out.println(getResultMessage(result));
-    }
+    static int compareNumber(int a, int b, int c) {
+        //Highが正解か？！Lowが正解か？！
+        int answer = (a < b) ? 1 : (a > b) ? 2 : 0;
 
-    static Result go(int first, int second, int userAnswer) {
-        final int got = Integer.compare(first, second);
-        if (got == 0) return Result.DRAW;
-        if (got < 0 && userAnswer == 1) return Result.WIN;
-        if (got > 0 && userAnswer == 2) return Result.WIN;
-        return Result.LOSE;
-    }
-
-    static String getResultMessage(final Result result) {
-        switch (result) {
-            case WIN:
-                return "あたり！ﾜ━ヽ(*´Д｀*)ﾉ━ｨ!!!";
-            case LOSE:
-                return "はずれ！(´・ω・｀)";
-            case DRAW:
-                return "引き分け！";
+        if (answer == 0) {
+            //1つ目の値と2つ目の値が等しい場合は勝負引き分け
+            System.out.println("引き分け！");
+            return 3;
+        } else if (answer == c) {
+            System.out.println("あたり！ﾜ━ヽ(*´Д｀*)ﾉ━ｨ!!!");
+            return 1;
+        } else {
+            System.out.println("はずれ！(´・ω・｀)");
+            return 2;
         }
-        throw new IllegalArgumentException();
-    }
-
-    enum Result {
-        WIN, LOSE, DRAW
     }
 }
 

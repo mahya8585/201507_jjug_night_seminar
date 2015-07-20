@@ -9,24 +9,34 @@ import java.util.regex.Pattern;
 /**
  * High and Low ゲームクラス
  */
-class HighAndLowExplainDocument {
+class HighAndLow1ChangeCamel {
     public static void main(String[] args) {
         // スタート文言の表示
         System.out.println("High and Low ゲームをはじめます。");
         // 基準値の生成
-        // TODO メソッドに切り出す
-        // TODO final
-        int first = (int) (Math.random() * 10 + 1);
+        int first = makeRandomNumber();
         // ユーザの入力
         System.out.println(first + "! 次の値は High? Low?");
-        int userAnswer = input_user_answer();
+        int userAnswer = inputUserAnswer();
         // 勝負値の生成
-        int second = (int) (Math.random() * 10 + 1);
+        int second = makeRandomNumber();
         System.out.println(second + "がでました！");
         // 結果判定
         compareNumber(first, second, userAnswer);
         System.out.println("ゲームを終わります。");
     }
+
+    /**
+     * ランダム数の生成を行います。
+     * 最大値・最小値の指定も今回はこのメソッド内で設定しています。
+     * 最小値：1 最大値：10
+     * @return int 乱数
+     */
+    static int makeRandomNumber(){
+
+        return (int)(Math.random() * 10 + 1);
+    }
+
 
     /**
      * ユーザの答えの入力を制御します。
@@ -36,9 +46,7 @@ class HighAndLowExplainDocument {
      *
      * @return
      */
-    // TODO キャメルケースにしよう
-    // TODO 公開範囲が無駄に広い
-    public static int input_user_answer() {
+    public static int inputUserAnswer() {
         String choices = "1: High   2: Low";
         System.out.println(choices);
 
@@ -64,7 +72,6 @@ class HighAndLowExplainDocument {
 
         } finally {
             try {
-                // TODO try-with-resources
                 is.close();
                 br.close();
             } catch (IOException ioe) {
@@ -72,7 +79,6 @@ class HighAndLowExplainDocument {
             }
         }
 
-        // TODO 例外の可能性
         return Integer.parseInt(userAnswer);
     }
 
@@ -91,8 +97,6 @@ class HighAndLowExplainDocument {
         }
 
         //数値型チェック
-        // TODO patternはキャッシュしてもOK
-        // TODO String#matchesでもOK
         Pattern pattern = Pattern.compile("^[0-9]*$");
         Matcher matcher = pattern.matcher(targetChoice);
         if (!matcher.find()) {
@@ -101,13 +105,10 @@ class HighAndLowExplainDocument {
 
         //今回はHigh and Low なので2択
         int selectNumber = Integer.parseInt(targetChoice);
-        // TODO !気付きにくいかも
-        // TODO -> selectNumber != 1 && selectNumber != 2
         if (!(selectNumber == 1 || selectNumber == 2)) {
             return false;
         }
 
-        // TODO まとめられる
         return true;
     }
 
@@ -119,13 +120,8 @@ class HighAndLowExplainDocument {
      * @param c ユーザが入力した答え(1:High 2:Low)
      * @return int 判定結果(1:正解 2:はずれ 3:引き分け）
      */
-    // TODO 引数の名前！名前重要
-    // TODO 戻り値、enumのほうがいいかもね
-    //TODO 「表示」と「処理」を分けよう
     protected static int compareNumber(int a, int b, int c) {
         //Highが正解か？！Lowが正解か？！
-        // TODO やりすぎ条件演算子
-        // TODO そもそもanswerいらないかも？
         int answer = (a < b) ? 1 : (a > b) ? 2 : 0;
 
         if (answer == 0) {
