@@ -14,8 +14,6 @@ class HighAndLow {
         // スタート文言の表示
         System.out.println("High and Low ゲームをはじめます。");
         // 基準値の生成
-        // TODO メソッドに切り出す
-        // TODO final
         int first = (int) (Math.random() * 10 + 1);
         // ユーザの入力
         System.out.println(first + "! 次の値は High? Low?");
@@ -36,8 +34,6 @@ class HighAndLow {
      *
      * @return
      */
-    // TODO キャメルケースにしよう
-    // TODO 公開範囲が無駄に広い
     public static int input_user_answer() {
         String choices = "1: High   2: Low";
         System.out.println(choices);
@@ -64,7 +60,6 @@ class HighAndLow {
 
         } finally {
             try {
-                // TODO try-with-resources
                 is.close();
                 br.close();
             } catch (IOException ioe) {
@@ -72,7 +67,6 @@ class HighAndLow {
             }
         }
 
-        // TODO 例外の可能性
         return Integer.parseInt(userAnswer);
     }
 
@@ -91,8 +85,6 @@ class HighAndLow {
         }
 
         //数値型チェック
-        // TODO patternはキャッシュしてもOK
-        // TODO String#matchesでもOK
         Pattern pattern = Pattern.compile("^[0-9]*$");
         Matcher matcher = pattern.matcher(targetChoice);
         if (!matcher.find()) {
@@ -101,13 +93,10 @@ class HighAndLow {
 
         //今回はHigh and Low なので2択
         int selectNumber = Integer.parseInt(targetChoice);
-        // TODO !気付きにくいかも
-        // TODO -> selectNumber != 1 && selectNumber != 2
         if (!(selectNumber == 1 || selectNumber == 2)) {
             return false;
         }
 
-        // TODO まとめられる
         return true;
     }
 
@@ -119,12 +108,8 @@ class HighAndLow {
      * @param c ユーザが入力した答え(1:High 2:Low)
      * @return int 判定結果(1:正解 2:はずれ 3:引き分け）
      */
-    // TODO 引数の名前！名前重要
-    // TODO 戻り値、enumのほうがいいかもね
     protected static int compareNumber(int a, int b, int c) {
         //Highが正解か？！Lowが正解か？！
-        // TODO やりすぎ条件演算子
-        // TODO そもそもanswerいらないかも？
         int answer = (a < b) ? 1 : (a > b) ? 2 : 0;
 
         if (answer == 0) {
