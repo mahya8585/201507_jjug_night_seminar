@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * High and Low ゲームクラス
  */
-class HighAndLow_2_tryWithResources {
+class HighAndLow2ChangeDefault {
     public static void main(String[] args) {
         // スタート文言の表示
         System.out.println("High and Low ゲームをはじめます。");
@@ -33,24 +33,30 @@ class HighAndLow_2_tryWithResources {
      * @return int 乱数
      */
     static int makeRandomNumber(){
+
         return (int)(Math.random() * 10 + 1);
     }
+
 
     /**
      * ユーザの答えの入力を制御します。
      * 1: High
      * 2: Low
      * 入力チェックも合わせて実施します。
+     *
      * @return
      */
-    static int inputUserAnswer(){
+    static int inputUserAnswer() {
         String choices = "1: High   2: Low";
         System.out.println(choices);
 
         String userAnswer = "";
 
-        try(InputStreamReader is = new InputStreamReader(System.in);
-            BufferedReader br = new BufferedReader(is)) {
+        InputStreamReader is = null;
+        BufferedReader br = null;
+        try {
+            is = new InputStreamReader(System.in);
+            br = new BufferedReader(is);
 
             // ユーザの入力を待ちます
             userAnswer = br.readLine();
@@ -61,9 +67,16 @@ class HighAndLow_2_tryWithResources {
                 System.out.println(choices);
                 userAnswer = br.readLine();
             }
-
         } catch (IOException ioe) {
             System.out.println("入力値に誤りがあります。ゲームを始めからやりなおしてください。 入力値：" + userAnswer);
+
+        } finally {
+            try {
+                is.close();
+                br.close();
+            } catch (IOException ioe) {
+                System.out.println("クローズ処理に失敗しました。");
+            }
         }
 
         return Integer.parseInt(userAnswer);
@@ -73,6 +86,7 @@ class HighAndLow_2_tryWithResources {
      * 選択肢の入力チェックを行います。
      * - 数値型であること
      * - 1か2の値であること（1:High 2:Low)
+     *
      * @param targetChoice 入力チェック対象
      * @return
      */
@@ -82,7 +96,6 @@ class HighAndLow_2_tryWithResources {
             return false;
         }
 
-        //TODO ２つまとめて1つのエラーチェックにする
         //数値型チェック
         Pattern pattern = Pattern.compile("^[0-9]*$");
         Matcher matcher = pattern.matcher(targetChoice);
@@ -92,9 +105,7 @@ class HighAndLow_2_tryWithResources {
 
         //今回はHigh and Low なので2択
         int selectNumber = Integer.parseInt(targetChoice);
-
-        //TODO simpllyfyを紹介する
-        if (!(selectNumber == 1 || selectNumber == 2)){
+        if (!(selectNumber == 1 || selectNumber == 2)) {
             return false;
         }
 
@@ -103,26 +114,21 @@ class HighAndLow_2_tryWithResources {
 
     /**
      * ユーザの選択肢の正誤を確認します
-     * @param first 基準値
-     * @param second 勝負値
-     * @param userAnswer ユーザが入力した答え(1:High 2:Low)
+     *
+     * @param a      基準値
+     * @param b     勝負値
+     * @param c ユーザが入力した答え(1:High 2:Low)
      * @return int 判定結果(1:正解 2:はずれ 3:引き分け）
      */
-    static int compareNumber(int first, int second, int userAnswer){
+    static int compareNumber(int a, int b, int c) {
         //Highが正解か？！Lowが正解か？！
-        int answer = 0;
-        if (first < second) {
-            answer = 1;
-        } else if (first > second){
-            answer = 2;
-        }
+        int answer = (a < b) ? 1 : (a > b) ? 2 : 0;
 
-        //TODO switchにする
         if (answer == 0) {
             //1つ目の値と2つ目の値が等しい場合は勝負引き分け
             System.out.println("引き分け！");
             return 3;
-        } else if (answer == userAnswer){
+        } else if (answer == c) {
             System.out.println("あたり！ﾜ━ヽ(*´Д｀*)ﾉ━ｨ!!!");
             return 1;
         } else {

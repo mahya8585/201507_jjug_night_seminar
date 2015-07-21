@@ -1,4 +1,4 @@
-package highandlow;
+package highandlow_answer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,22 +9,34 @@ import java.util.regex.Pattern;
 /**
  * High and Low ゲームクラス
  */
-class HighAndLow {
+class HighAndLow1ChangeCamel {
     public static void main(String[] args) {
         // スタート文言の表示
         System.out.println("High and Low ゲームをはじめます。");
         // 基準値の生成
-        int first = (int) (Math.random() * 10 + 1);
+        int first = makeRandomNumber();
         // ユーザの入力
         System.out.println(first + "! 次の値は High? Low?");
-        int userAnswer = input_user_answer();
+        int userAnswer = inputUserAnswer();
         // 勝負値の生成
-        int second = (int) (Math.random() * 10 + 1);
+        int second = makeRandomNumber();
         System.out.println(second + "がでました！");
         // 結果判定
         compareNumber(first, second, userAnswer);
         System.out.println("ゲームを終わります。");
     }
+
+    /**
+     * ランダム数の生成を行います。
+     * 最大値・最小値の指定も今回はこのメソッド内で設定しています。
+     * 最小値：1 最大値：10
+     * @return int 乱数
+     */
+    static int makeRandomNumber(){
+
+        return (int)(Math.random() * 10 + 1);
+    }
+
 
     /**
      * ユーザの答えの入力を制御します。
@@ -34,7 +46,7 @@ class HighAndLow {
      *
      * @return
      */
-    public static int input_user_answer() {
+    public static int inputUserAnswer() {
         String choices = "1: High   2: Low";
         System.out.println(choices);
 

@@ -9,20 +9,27 @@ import java.util.regex.Pattern;
 /**
  * High and Low ゲームクラス
  */
-class HighAndLow_3_margeErrorChack {
+class HighAndLow5UseSwitch {
+    // 入力チェックパターン
+    private static final Pattern pattern = Pattern.compile("^[12]$");
+
     public static void main(String[] args) {
         // スタート文言の表示
         System.out.println("High and Low ゲームをはじめます。");
+
         // 基準値の生成
         int first = makeRandomNumber();
+
         // ユーザの入力
         System.out.println(first + "! 次の値は High? Low?");
         int userAnswer = inputUserAnswer();
+
         // 勝負値の生成
         int second = makeRandomNumber();
         System.out.println(second + "がでました！");
+
         // 結果判定
-        compareNumber(first, second, userAnswer);
+        showResult(first, second, userAnswer);
         System.out.println("ゲームを終わります。");
     }
 
@@ -33,17 +40,20 @@ class HighAndLow_3_margeErrorChack {
      * @return int 乱数
      */
     static int makeRandomNumber(){
+
         return (int)(Math.random() * 10 + 1);
     }
+
 
     /**
      * ユーザの答えの入力を制御します。
      * 1: High
      * 2: Low
      * 入力チェックも合わせて実施します。
+     *
      * @return
      */
-    static int inputUserAnswer(){
+    static int inputUserAnswer() {
         String choices = "1: High   2: Low";
         System.out.println(choices);
 
@@ -73,6 +83,7 @@ class HighAndLow_3_margeErrorChack {
      * 選択肢の入力チェックを行います。
      * - 数値型であること
      * - 1か2の値であること（1:High 2:Low)
+     *
      * @param targetChoice 入力チェック対象
      * @return
      */
@@ -82,8 +93,7 @@ class HighAndLow_3_margeErrorChack {
             return false;
         }
 
-        //数値型チェック
-        Pattern pattern = Pattern.compile("^[12]$");
+        //数値型チェック(パターンはクラス変数にあります）
         Matcher matcher = pattern.matcher(targetChoice);
         if (!matcher.find()) {
             return false;
@@ -93,33 +103,69 @@ class HighAndLow_3_margeErrorChack {
     }
 
     /**
-     * ユーザの選択肢の正誤を確認します
+     * ユーザの選択肢の正誤を確認します(結果表示のコントロールクラス）
      * @param first 基準値
      * @param second 勝負値
      * @param userAnswer ユーザが入力した答え(1:High 2:Low)
-     * @return int 判定結果(1:正解 2:はずれ 3:引き分け）
      */
-    static int compareNumber(int first, int second, int userAnswer){
-        //Highが正解か？！Lowが正解か？！
-        int answer = 0;
-        if (first < second) {
-            answer = 1;
-        } else if (first > second){
-            answer = 2;
-        }
+    static void showResult(int first, int second, int userAnswer){
+        //2つ目の数値の表示
+        System.out.println(second + "がでました！");
 
-        //TODO switchにする
-        if (answer == 0) {
-            //1つ目の値と2つ目の値が等しい場合は勝負引き分け
-            System.out.println("引き分け！");
-            return 3;
-        } else if (answer == userAnswer){
-            System.out.println("あたり！ﾜ━ヽ(*´Д｀*)ﾉ━ｨ!!!");
-            return 1;
+        // 1つ目2つ目の数値を比較し、その結果とユーザの回答を照会します
+        final Result result = go(first, second, userAnswer);
+
+        // 結果の表示
+        System.out.println(displayResultMessage(result));
+    }
+
+    /**
+     * 数字の比較を行い、勝敗判定を行います
+     * @param first 1つ目の数字
+     * @param second 2つ目の数字
+     * @param userAnswer ユーザが答えた判定(1:High 2:Low)
+     * @return Result 判定結果
+     */
+    static Result go(int first, int second, int userAnswer) {
+        //1つ目と2つ目の数字の比較
+        final int got = Integer.compare(first, second);
+
+        // 上記判定結果をユーザの答えと照会します
+        if (got == 0) {
+            return Result.DRAW;
+
+        } else if (got < 0 && userAnswer == 1) {
+            return Result.WIN;
+
+        } else if (got > 0 && userAnswer == 2) {
+            return Result.WIN;
         } else {
-            System.out.println("はずれ！(´・ω・｀)");
-            return 2;
+            return Result.LOSE;
         }
+    }
+
+    /**
+     * 結果表示
+     * @param result 判定結果
+     * @return 表示するメッセージ
+     */
+    static String displayResultMessage(final Result result) {
+        switch (result) {
+            case WIN:
+                return "あたり！ﾜ━ヽ(*´Д｀*)ﾉ━ｨ!!!";
+            case LOSE:
+                return "はずれ！(´・ω・｀)";
+            case DRAW:
+                return "引き分け！";
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * 結果判定用変数 Result
+     */
+    enum Result {
+        WIN, LOSE, DRAW
     }
 }
 
