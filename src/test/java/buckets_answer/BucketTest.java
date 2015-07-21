@@ -30,7 +30,7 @@ public class BucketTest {
 
     @Test
     public void fullInを呼び出した場合バケツが満タンになること() {
-        bucket.fullIn();
+        bucket.fill();
 
         assertThat(bucket.getAmount(), is(TEST_BUCKET_CAPACITY));
     }

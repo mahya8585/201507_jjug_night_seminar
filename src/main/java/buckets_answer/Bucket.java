@@ -23,7 +23,7 @@ public class Bucket {
     /**
      * バケツいっぱいに水を満たす
      */
-    public void fullIn() {
+    public void fill() {
         amount = capacity;
     }
 
