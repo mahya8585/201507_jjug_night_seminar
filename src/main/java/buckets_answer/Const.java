@@ -16,10 +16,10 @@ public class Const {
 
     //組み合わせ作成用の代替変数
     public static enum BucketActions {
-        SMALL_FULLIN,
+        SMALL_FILL,
         SMALL_EMPTY,
         SMALL_MOVE,
-        LARGE_FULLIN,
+        LARGE_FILL,
         LARGE_EMPTY,
         LARGE_MOVE
     }

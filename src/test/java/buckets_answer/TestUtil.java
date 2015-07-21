@@ -52,7 +52,7 @@ public class TestUtil {
                 processText.append(LARGE_BUCKET_CAPACITY).append("L のバケツを空にする");
                 break;
 
-            case LARGE_FULLIN:
+            case LARGE_FILL:
                 processText.append(LARGE_BUCKET_CAPACITY).append("L のバケツを満たす");
                 break;
 
@@ -67,7 +67,7 @@ public class TestUtil {
                 processText.append(SMALL_BUCKET_CAPACITY).append("L のバケツを空にする");
                 break;
 
-            case SMALL_FULLIN:
+            case SMALL_FILL:
                 processText.append(SMALL_BUCKET_CAPACITY).append("L のバケツを満たす");
                 break;
 

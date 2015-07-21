@@ -60,7 +60,7 @@ public class CreateDisplayWords {
                 processText.append(Const.LARGE_BUCKET_CAPACITY).append("L のバケツを空にする");
                 break;
 
-            case LARGE_FULLIN:
+            case LARGE_FILL:
                 processText.append(Const.LARGE_BUCKET_CAPACITY).append("L のバケツを満たす");
                 break;
 
@@ -75,7 +75,7 @@ public class CreateDisplayWords {
                 processText.append(Const.SMALL_BUCKET_CAPACITY).append("L のバケツを空にする");
                 break;
 
-            case SMALL_FULLIN:
+            case SMALL_FILL:
                 processText.append(Const.SMALL_BUCKET_CAPACITY).append("L のバケツを満たす");
                 break;
 

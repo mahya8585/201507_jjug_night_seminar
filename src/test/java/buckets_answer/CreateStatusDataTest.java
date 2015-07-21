@@ -25,7 +25,7 @@ public class CreateStatusDataTest {
         Status result = createStatusData.makeAmountAndTextInStatus(
                 Const.SMALL_BUCKET_CAPACITY,
                 Const.LARGE_BUCKET_CAPACITY,
-                Const.BucketActions.LARGE_FULLIN,
+                Const.BucketActions.LARGE_FILL,
                 new Status());
 
         assertThat(result.getSmallBucketAmount(), is(Const.SMALL_BUCKET_CAPACITY));
@@ -65,7 +65,7 @@ public class CreateStatusDataTest {
         MeasurementGame measurementGame = new MeasurementGame();
         measurementGame.makeDefaultValue();
         Status result = createStatusData.makeAmountAndTextInStatus(
-                3, 6, Const.BucketActions.SMALL_FULLIN, measurementGame.queue.poll()
+                3, 6, Const.BucketActions.SMALL_FILL, measurementGame.queue.poll()
         );
         result = createStatusData.makeHistoryInStatus(result);
 
@@ -73,7 +73,7 @@ public class CreateStatusDataTest {
         assertThat(result.getSmallBucketAmount(), is(3));
         assertThat(result.getLargeBucketAmount(), is(6));
 
-        String expectation = util.createActionText(Const.BucketActions.SMALL_FULLIN) + " : (3 , 6)";
+        String expectation = util.createActionText(Const.BucketActions.SMALL_FILL) + " : (3 , 6)";
         assertThat(result.getProcessText(), is(expectation));
 
         assertThat(result.getHistory().size(), is(1));
