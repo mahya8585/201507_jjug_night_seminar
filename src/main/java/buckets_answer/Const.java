@@ -15,7 +15,7 @@ public class Const {
     public static final int ANSWER = 4;
 
     //組み合わせ作成用の代替変数
-    public static enum BucketActions {
+    public enum BucketActions {
         SMALL_FULLIN,
         SMALL_EMPTY,
         SMALL_MOVE,
