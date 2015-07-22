@@ -33,14 +33,14 @@ public class HighAndLowTest{
     @Test
     public void ユーザが正しい値を入力した場合入力した数値が返却されること(){
         inputStream.inputString("1");
-        assertThat(highAndLow.inputUserAnswer(), is(1));
+        assertThat(highAndLow.input_user_answer(), is(1));
     }
 
     @Test
     public void ユーザが空文字を入力した場合もう一度入力を求められること(){
         inputStream.inputString("");
         try{
-            highAndLow.inputUserAnswer();
+            highAndLow.input_user_answer();
         } catch (NullPointerException nullPoint) {
             assertTrue(true);
         }
@@ -51,7 +51,7 @@ public class HighAndLowTest{
     public void ユーザが数値以外の値を入力した場合もう一度入力を求められること(){
         inputStream.inputString("あああ");
         try{
-            highAndLow.inputUserAnswer();
+            highAndLow.input_user_answer();
         } catch (NullPointerException nullPoint) {
             assertTrue(true);
         }
@@ -62,7 +62,7 @@ public class HighAndLowTest{
     public void ユーザが想定外の数値を入力した場合もう一度入力を求められること(){
         inputStream.inputString("3");
         try{
-            highAndLow.inputUserAnswer();
+            highAndLow.input_user_answer();
         } catch (NullPointerException nullPoint) {
             assertTrue(true);
         }
@@ -105,7 +105,7 @@ public class HighAndLowTest{
 
         Map<Integer,Integer> resultNumbers = new HashMap<>();
         for (int roopCount = 0; roopCount < runCount; roopCount++) {
-            int result = highAndLow.makeRandomNumber();
+            int result = (int) (Math.random() * 10 + 1);
 
             //すでに集計Map内にキーが存在する場合は集計値を+1する
             Integer totaling = 0;
