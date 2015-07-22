@@ -109,8 +109,8 @@ public class MeasurementGame {
                 largeBucket.empty();
                 break;
 
-            case LARGE_FULLIN:
-                largeBucket.fullIn();
+            case LARGE_FILL:
+                largeBucket.fill();
                 break;
 
             case LARGE_MOVE:
@@ -125,8 +125,8 @@ public class MeasurementGame {
                 smallBucket.empty();
                 break;
 
-            case SMALL_FULLIN:
-                smallBucket.fullIn();
+            case SMALL_FILL:
+                smallBucket.fill();
                 break;
 
             case SMALL_MOVE:

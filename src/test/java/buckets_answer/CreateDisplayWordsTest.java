@@ -39,10 +39,10 @@ public class CreateDisplayWordsTest {
 
         //数値だけ表示されます
         List<Status> statusList = new ArrayList<>();
-        statusList.add(util.createStatusAmounts(3, 0, Const.BucketActions.SMALL_FULLIN));
+        statusList.add(util.createStatusAmounts(3, 0, Const.BucketActions.SMALL_FILL));
         statusList.add(util.createStatusAmounts(0, 3, Const.BucketActions.SMALL_MOVE));
         statusList.add(util.createStatusAmounts(3, 0, Const.BucketActions.LARGE_MOVE));
-        statusList.add(util.createStatusAmounts(3, 8, Const.BucketActions.LARGE_FULLIN));
+        statusList.add(util.createStatusAmounts(3, 8, Const.BucketActions.LARGE_FILL));
         statusList.add(util.createStatusAmounts(0, 8, Const.BucketActions.SMALL_EMPTY));
         statusList.add(util.createStatusAmounts(0, 0, Const.BucketActions.LARGE_EMPTY));
         testData.setHistory(statusList);
@@ -76,9 +76,9 @@ public class CreateDisplayWordsTest {
     @Test
     public void 手順名LARGE_FULLINの場合に指定文言が返却されること(){
         Status status = util.createStatusAmounts(1,1, null);
-        String result = createDisplayWords.createProcessText(Const.BucketActions.LARGE_FULLIN, status);
+        String result = createDisplayWords.createProcessText(Const.BucketActions.LARGE_FILL, status);
 
-        String expectation = util.createActionText(Const.BucketActions.LARGE_FULLIN) + " : (1 , 1)";
+        String expectation = util.createActionText(Const.BucketActions.LARGE_FILL) + " : (1 , 1)";
         assertThat(result, is(expectation));
     }
 
@@ -103,9 +103,9 @@ public class CreateDisplayWordsTest {
     @Test
     public void 手順名SMALL_FULLINの場合に指定文言が返却されること(){
         Status status = util.createStatusAmounts(1,1, null);
-        String result = createDisplayWords.createProcessText(Const.BucketActions.SMALL_FULLIN, status);
+        String result = createDisplayWords.createProcessText(Const.BucketActions.SMALL_FILL, status);
 
-        String expectation = util.createActionText(Const.BucketActions.SMALL_FULLIN) + " : (1 , 1)";
+        String expectation = util.createActionText(Const.BucketActions.SMALL_FILL) + " : (1 , 1)";
         assertThat(result, is(expectation));
     }
 

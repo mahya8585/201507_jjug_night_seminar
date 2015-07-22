@@ -63,7 +63,7 @@ public class MeasurementGameTest {
         Status requestParam = createStatusAmounts(2, 4, null);
 
         //実行
-        Status result = measurementGame.executeBucketAction(Const.BucketActions.LARGE_FULLIN, requestParam);
+        Status result = measurementGame.executeBucketAction(Const.BucketActions.LARGE_FILL, requestParam);
 
         assertThat(result.getLargeBucketAmount(), is(Const.LARGE_BUCKET_CAPACITY));
         assertThat(result.getSmallBucketAmount(), is(2));
@@ -106,7 +106,7 @@ public class MeasurementGameTest {
         Status requestParam = createStatusAmounts(1, 5, null);
 
         //実行
-        Status result = measurementGame.executeBucketAction(Const.BucketActions.SMALL_FULLIN, requestParam);
+        Status result = measurementGame.executeBucketAction(Const.BucketActions.SMALL_FILL, requestParam);
 
         assertThat(result.getLargeBucketAmount(), is(5));
         assertThat(result.getSmallBucketAmount(), is(Const.SMALL_BUCKET_CAPACITY));
