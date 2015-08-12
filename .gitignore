@@ -1,1 +1,7 @@
 target
+.*
+!.gitignore
+*.iml
+*.ipr
+*.iws
+
