@@ -12,3 +12,5 @@
 #### java実行コマンド例
 
 java -classpath target/201507_jjug-1.0.jar highandlow_answer.HighAndLow
+
+引き続きプルリクお待ちしております。よろしければbucketソースの方もおねがいします。
